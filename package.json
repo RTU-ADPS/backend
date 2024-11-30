@@ -1,0 +1,30 @@
+{
+  "name": "revbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx tsc && node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RTU-ADPS/backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RTU-ADPS/backend/issues"
+  },
+  "homepage": "https://github.com/RTU-ADPS/backend#readme",
+  "dependencies": {
+    "@types/node": "^22.10.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.3",
+    "@types/express": "^5.0.0",
+    "typescript": "^5.7.2"
+  }
+}
