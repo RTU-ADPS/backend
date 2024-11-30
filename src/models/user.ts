@@ -1,14 +1,34 @@
-import {Model, InferAttributes, InferCreationAttributes, CreationOptional, DataTypes, Sequelize} from 'sequelize';
+import {
+    Model,
+    InferAttributes,
+    InferCreationAttributes,
+    CreationOptional,
+    DataTypes,
+    Sequelize,
+    HasOneGetAssociationMixin,
+    HasManyGetAssociationsMixin,
+    HasManyAddAssociationMixin,
+    Association
+} from 'sequelize';
+import { AccountHolder } from './account-holder';
+import { SecurityLog } from './security-log';
 
-// order of InferAttributes & InferCreationAttributes is important.
-class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-    // 'CreationOptional' is a special type that marks the field as optional
-    // when creating an instance of the model (such as using Model.create()).
+export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
     declare id: CreationOptional<number>;
     declare username: string;
-    declare password_hash: string;
-    declare last_login: string;
-    declare two_factor_enabled: boolean;
+    declare passwordHash: string;
+    declare lastLogin: Date;
+    declare twoFactorEnabled: boolean;
+
+    // Mixins for associations
+    declare getAccountHolder: HasOneGetAssociationMixin<AccountHolder>;
+    declare getSecurityLogs: HasManyGetAssociationsMixin<SecurityLog>;
+
+    // Static associations
+    declare static associations: {
+        accountHolder: Association<User, AccountHolder>;
+        securityLogs: Association<User, SecurityLog>;
+    };
 }
 
 export function createUserModel(sequelize: Sequelize): typeof User {
@@ -21,17 +41,18 @@ export function createUserModel(sequelize: Sequelize): typeof User {
         username: {
             type: new DataTypes.STRING(128),
             allowNull: false,
+            unique: true,
         },
-        password_hash: {
-            type: DataTypes.STRING(128),
+        passwordHash: {
+            type: DataTypes.STRING(256),
             allowNull: false,
         },
-        last_login: {
-            type: DataTypes.TIME(),
+        lastLogin: {
+            type: DataTypes.DATE(),
             allowNull: false,
-            defaultValue: DataTypes.NOW,
+            defaultValue: DataTypes.NOW(),
         },
-        two_factor_enabled: {
+        twoFactorEnabled: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
         }
