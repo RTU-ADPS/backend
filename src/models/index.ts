@@ -1,5 +1,12 @@
 import {Sequelize} from 'sequelize';
 import {createUserModel} from './user';
+import {createAddressModel} from "./address";
+import {setDefaultHighWaterMark} from "node:stream";
+import {createAccountModel} from "./account";
+import {createAccountHolderModel} from "./account-holder";
+import {createDebitCardModel} from "./debit-card";
+import {createPaymentOptionModel} from "./payment-option";
+import {createTransactionModel} from "./transaction";
 
 
 const sequelize = new Sequelize({
@@ -7,9 +14,14 @@ const sequelize = new Sequelize({
     storage: './database.sqlite',
 });
 
-const User = createUserModel(sequelize);
+const Address = createAddressModel(sequelize);
+const Account = createAccountModel(sequelize);
+const AccountHolder = createAccountHolderModel(sequelize);
+const DebitCard = createDebitCardModel(sequelize);
+const PaymentOption = createPaymentOptionModel(sequelize);
+const Transaction = createTransactionModel(sequelize);
 
 
 console.log("Database & tables created!");
 
-export {sequelize, User};
+export {sequelize, Address, Account, AccountHolder, DebitCard, PaymentOption, Transaction};
