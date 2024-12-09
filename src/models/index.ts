@@ -1,7 +1,5 @@
 import {Sequelize} from 'sequelize';
-import {createUserModel} from './user';
 import {createAddressModel} from "./address";
-import {setDefaultHighWaterMark} from "node:stream";
 import {createAccountModel} from "./account";
 import {createAccountHolderModel} from "./account-holder";
 import {createDebitCardModel} from "./debit-card";
