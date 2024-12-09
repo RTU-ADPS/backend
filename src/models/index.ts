@@ -21,6 +21,20 @@ const DebitCard = createDebitCardModel(sequelize);
 const PaymentOption = createPaymentOptionModel(sequelize);
 const Transaction = createTransactionModel(sequelize);
 
+Address.hasMany(AccountHolder);
+AccountHolder.hasOne(Address);
+
+AccountHolder.hasMany(PaymentOption);
+PaymentOption.hasMany(AccountHolder);
+
+PaymentOption.hasOne(Account);
+PaymentOption.hasOne(DebitCard);
+
+Account.hasMany(DebitCard);
+
+PaymentOption.hasMany(Transaction);
+Transaction.belongsTo(PaymentOption);
+
 
 console.log("Database & tables created!");
 
